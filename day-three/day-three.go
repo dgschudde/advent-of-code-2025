@@ -12,6 +12,7 @@ func main() {
 
 	input = common.ReadInput("./input/input.txt")
 	PartOne(*input)
+	PartTwo(*input)
 }
 
 func PartOne(input []string) {
@@ -49,6 +50,46 @@ func PartOne(input []string) {
 		total += intResult
 	}
 	fmt.Println(total)
+}
+
+func PartTwo(input []string) {
+	var results int64
+	var intResult int64
+
+	for _, element := range input {
+		result := Top12(element)
+
+		intResult, _ = strconv.ParseInt(result, 10, 64)
+		fmt.Println(intResult)
+		results += intResult
+	}
+	fmt.Println(results)
+}
+
+func Top12(s string) string {
+	n := len(s)
+	k := 12
+	if k >= n {
+		return s
+	}
+
+	toRemove := n - k
+	stack := make([]byte, 0, k)
+
+	for i := 0; i < n; i++ {
+		c := s[i]
+		for toRemove > 0 && len(stack) > 0 && stack[len(stack)-1] < c {
+			stack = stack[:len(stack)-1]
+			toRemove--
+		}
+		stack = append(stack, c)
+	}
+
+	if toRemove > 0 {
+		stack = stack[:len(stack)-toRemove]
+	}
+
+	return string(stack[:k])
 }
 
 func ConvertToIntArray(element string) []int {
