@@ -31,3 +31,21 @@ func ReadInput(fileName string) *[]string {
 
 	return &input
 }
+
+func ConvertTo2DArray(input []string) [][]rune {
+	dy := len(input)
+	dx := len(input[0])
+
+	arr := make([][]rune, dy)
+	for i := range arr {
+		arr[i] = make([]rune, dx)
+	}
+
+	for x, line := range input {
+		for y, char := range line {
+			arr[x][y] = char
+		}
+	}
+
+	return arr
+}

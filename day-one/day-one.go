@@ -75,7 +75,7 @@ func partTwo(input []string) {
 		case "R":
 			{
 				dial += distance
-				if dial > 99 {
+				if dial >= 100 {
 					dial = dial - 100
 					bounds++
 				}
@@ -89,10 +89,7 @@ func partTwo(input []string) {
 				}
 			}
 		}
-		//fmt.Printf("Direction: %s => %d dial: %d\r\n", direction, distance, dial)
-		if dial == 0 && distance/100 > 0 {
-			//bounds--
-		}
+
 		outComes[index] = dial
 	}
 
