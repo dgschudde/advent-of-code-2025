@@ -4,7 +4,14 @@ import (
 	"bufio"
 	"log"
 	"os"
+	"strconv"
+	"strings"
 )
+
+type Ranges struct {
+	Min int
+	Max int
+}
 
 func ReadInput(fileName string) *[]string {
 	var input = make([]string, 0)
@@ -48,4 +55,26 @@ func ConvertTo2DArray(input []string) [][]rune {
 	}
 
 	return arr
+}
+
+func ConvertToRanges(input []string) ([]Ranges, []int) {
+	var ranges = make([]Ranges, 0)
+	var ids = make([]int, 0)
+
+	for _, line := range input {
+		if strings.Contains(line, "-") {
+			splitRange := strings.Split(line, "-")
+			min, _ := strconv.Atoi(splitRange[0])
+			max, _ := strconv.Atoi(splitRange[1])
+			ranges = append(ranges, Ranges{min, max})
+		} else if line == "" {
+			continue
+		} else {
+
+			result, _ := strconv.ParseInt(line, 10, 64)
+			ids = append(ids, int(result))
+		}
+	}
+
+	return ranges, ids
 }
