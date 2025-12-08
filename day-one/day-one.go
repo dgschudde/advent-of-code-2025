@@ -13,7 +13,7 @@ func main() {
 
 	input = common.ReadInput("./input/input.txt")
 
-	//partOne(*input)
+	partOne(*input)
 	partTwo(*input)
 }
 
@@ -61,49 +61,31 @@ func partOne(input []string) {
 func partTwo(input []string) {
 	var dial = 50
 	var countZeroes = 0
-	var previousDial = -1
 
 	for _, element := range input {
-		var direction = string(element[0])
 		var distance, _ = strconv.Atoi(element[1:])
 
-		hundreds := distance / 100
-		distance = distance % 100
-		countZeroes += hundreds
+		for i := 0; i < distance; i++ {
 
-		switch direction {
-		case "R":
-			{
-				dial += distance
-				if dial > 99 {
-					dial = dial - 100
-					countZeroes++
-					if previousDial == 0 {
-						countZeroes++
-					}
+			var direction = string(element[0])
+
+			switch direction {
+			case "R":
+				{
+					dial += 1
+				}
+			case "L":
+				{
+					dial -= 1
 				}
 			}
-		case "L":
-			{
-				dial -= distance
-				if dial == 0 {
-					countZeroes++
-					if previousDial == 0 {
-						countZeroes++
-					}
-				}
-				if dial < 0 {
-					dial = dial + 100
-					if previousDial == 0 {
-						countZeroes++
-					}
-				}
+
+			dial = dial % 100
+
+			if dial%100 == 0 {
+				countZeroes++
 			}
 		}
-
-		previousDial = dial
-
-		fmt.Printf("Direction: %s => %d dial: %d\r\n", direction, distance, dial)
 	}
 
 	fmt.Printf("Password: %d\r\n", countZeroes)
